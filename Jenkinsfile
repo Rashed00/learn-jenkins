@@ -1,16 +1,24 @@
 pipeline {
-    agent any
-
-    environment {
-        API_TOKEN = credentials('my-api-token')   // binds the secret to an env var
+    agent {
+        docker {
+            image 'node:18-alpine'       // any Docker Hub image
+            args '-u root'               // optional: run as root inside container
+        }
     }
 
     stages {
-        stage('Use Secret') {
+        stage('Check Environment') {
             steps {
-                // Jenkins automatically masks the value in logs
-                sh 'echo "Token length: ${#API_TOKEN}"'
-                echo "Token is set: ${API_TOKEN != null}"
+                sh 'node --version'
+                sh 'npm --version'
+                sh 'whoami'
+            }
+        }
+
+        stage('Install & Build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
     }
