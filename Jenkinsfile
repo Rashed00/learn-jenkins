@@ -13,7 +13,7 @@ pipeline {
             steps {
                 echo 'Testing...'
                 // Uncomment to simulate failure:
-                // sh 'exit 1'
+                sh 'exit 1'
             }
         }
     }
