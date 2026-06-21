@@ -2,44 +2,19 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Hello') {
             steps {
-                checkout scm
+                echo 'Hello from Jenkins!'
+                sh 'echo "Running on: $(uname -a)"'
+                sh 'pwd'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Check Tools') {
             steps {
-                sh '''
-                python3 -m venv .venv
-                . .venv/bin/activate
-                pip install -r requirements.txt
-                '''
+                sh 'git --version'
+                sh 'java -version'
             }
-        }
-
-        stage('Test') {
-            steps {
-       		sh '''
-        	. .venv/bin/activate
-        	pytest
-        	'''   
-	 }
-        }
-
-        stage('Build Artifact') {
-            steps {
-                sh '''
-                mkdir -p dist
-                zip -r dist/app.zip .
-                '''
-            }
-        }
-    }
-
-    post {
-        always {
-            archiveArtifacts artifacts: 'dist/*.zip'
         }
     }
 }
