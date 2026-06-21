@@ -20,8 +20,11 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'pytest'
-            }
+       		sh '''
+        	. .venv/bin/activate
+        	pytest
+        	'''   
+	 }
         }
 
         stage('Build Artifact') {
