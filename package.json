@@ -1,0 +1,8 @@
+{
+  "name": "learn-jenkins",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo 'Build complete'",
+    "test": "echo 'Tests passed'"
+  }
+}
